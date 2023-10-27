@@ -154,7 +154,7 @@ export default function Profile() {
             ''
           )}
         </p>
-        <input 
+        <input  
           type='text' 
           placeholder='username' 
           id='username'
@@ -162,7 +162,7 @@ export default function Profile() {
           defaultValue={currentUser.username}
           onChange={handleChange}  
           />
-         <input 
+         <input
             type='email' 
             placeholder='email' 
             id='email'

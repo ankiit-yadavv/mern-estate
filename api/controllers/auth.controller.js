@@ -71,4 +71,4 @@ export const signOut = () => {
   } catch (error) {
     next(error);
   }
-}
+};
