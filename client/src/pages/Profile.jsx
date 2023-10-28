@@ -28,6 +28,8 @@ export default function Profile() {
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [showListingsError, setShowListingsError] = useState(false);
+  const [userListings, setUserListings] = useState([]);
   const dispatch = useDispatch();
 
    //console.log(formData);
@@ -126,6 +128,22 @@ export default function Profile() {
 
   };
 
+  const handleShowListings = async () => {
+    try {
+      setShowListingsError(false);
+      const res = await fetch(`/api/user/listings/${currentUser._id}`);
+      const data = await res.json();
+      if( data.success === false ) {
+        setShowListingsError(true);
+        return;
+      }
+      setUserListings(data);
+      
+    } catch (error) {
+       setShowListingsError(true);
+    }
+  };
+
    return (
     <div className='p-3 max-w-lg mx-auto'>
       <h1 className='text-3xl font-semibold text-center my-7'>
@@ -192,21 +210,74 @@ export default function Profile() {
 
       </form>  
       <div className='flex justify-between mt-5 '>
-        <button
-          type='button' 
+        <span 
           onClick={handleDeleteUser}
-          className="focus:outline-none text-white bg-red-100 hover:bg-red-300 focus:ring-4 focus:ring-red-100 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-500 dark:hover:bg-red-400 dark:focus:ring-red-900">
+          className="text-red-700 cursor-pointer">
           Delete account
-        </button>
-        <button 
-          type='button'
+        </span>
+        <span
           onClick={handleSignOut}
-          className="focus:outline-none text-white bg-purple-100 hover:bg-purple-300 focus:ring-4 focus:ring-purple-100 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-500 dark:hover:bg-purple-400 dark:focus:ring-purple-900">
+          className="text-red-700 cursor-pointer">
           Sign out
-        </button>
+        </span>
       </div>
-      {/* <p className='text-red-700 mt-3 text-center text-lg'>{error ? error : ''}</p> */}
-      <p className='text-green-700 mt-3 text-center text-lg'>{ updateSuccess ? 'User Profile Updated successfully !' : ''}</p>
+      {/* <p className='text-red-700 mt-5 text-center'>{error ? error : ''}</p> */}
+      <p className='text-green-700 mt-5 text-center'>
+      { updateSuccess ? 'User Profile Updated successfully !' : ''}
+      </p>
+      
+        <button 
+          onClick={handleShowListings}
+          className='
+          text-green-700 w-full'
+        >
+        Show Listings
+        </button>   
+        <p
+          className='text-red-700 mt-5'
+        >
+          {showListingsError ? 'Error in Showing Listing' : ' '}
+        </p>  
+
+        {userListings && userListings.length > 0 && (
+        <div className='flex flex-col gap-4'>
+          <h1 className='text-center mt-7 text-2xl font-semibold'>
+            Your Listings
+          </h1>
+          {userListings.map((listings) => (
+            <div
+              key={listings._id}
+              className='border rounded-lg p-3 flex justify-between items-center gap-4'
+            >
+              <Link to={`/listing/${listings._id}`}>
+                <img
+                  src={listings.imageUrls[0]}
+                  alt='listing cover'
+                  className='h-20 w-20 object-contain'
+                />
+              </Link>
+              <Link
+                className='text-slate-700 font-semibold  hover:underline truncate flex-1'
+                to={`/listing/${listings._id}`}
+              >
+                <p>{listings.name}</p>
+              </Link>
+
+              <div className='flex flex-col item-center'>
+                <button
+                  onClick={() => handleListingDelete(listings._id)}
+                  className='text-red-700 uppercase'
+                >
+                  Delete
+                </button>
+                <Link to={`/update-listing/${listings._id}`}>
+                  <button className='text-green-700 uppercase'>Edit</button>
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
-  )
+  );
 }
