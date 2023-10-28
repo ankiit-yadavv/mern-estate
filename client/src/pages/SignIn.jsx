@@ -31,7 +31,7 @@ export default function SignIn() {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      console.log(data);
+      //console.log(data);
       if (data.success === false) {
         dispatch(signInFailure(data.message));
         return;
@@ -47,6 +47,7 @@ export default function SignIn() {
       <h1 className='text-3xl text-center font-semibold my-7'>Sign In</h1>
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         <input
+          required
           type='email'
           placeholder='email'
           className='border p-3 rounded-lg'
@@ -54,6 +55,7 @@ export default function SignIn() {
           onChange={handleChange}
         />
         <input
+          required
           type='password'
           placeholder='password'
           className='border p-3 rounded-lg'
@@ -72,7 +74,7 @@ export default function SignIn() {
       <div className='flex gap-2 mt-5'>
         <p>Dont have an account?</p>
         <Link to={'/sign-up'}>
-          <span className='text-blue-700'>Sign up</span>
+          <span className='text-blue-700 underline'>Sign up</span>
         </Link>
       </div>
       {error && <p className='text-red-500 mt-5'>{error}</p>}
