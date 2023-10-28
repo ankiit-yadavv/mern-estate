@@ -110,22 +110,21 @@ export default function Profile() {
   };
 
   const handleSignOut = async () => {
-   try{
-    dispatch(signOutUserStart());
-    const res = await fetch(`/api/user/delete/${currentUser._id}`, {
-      method: 'DELETE',
-    });
-    const data = await res.json();
-    if (data.success === false) {
-      dispatch(signOutUserFailure(data.message));
-      return;
-    }
-    dispatch(signOutUserSuccess(data));
-  } catch (error) {
-    dispatch(signOutUserFailure(error.message));
-  }
 
-  }
+    try {
+      dispatch(signOutUserStart());
+      const res = await fetch('/api/auth/signout');
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data.message));
+        return;
+      }
+      dispatch(deleteUserSuccess(data));
+    } catch (error) {
+      dispatch(deleteUserFailure(data.message));
+    }
+
+  };
 
    return (
     <div className='p-3 max-w-lg mx-auto'>
@@ -193,16 +192,18 @@ export default function Profile() {
 
       </form>  
       <div className='flex justify-between mt-5 '>
-        <span 
+        <button
+          type='button' 
           onClick={handleDeleteUser}
-          className='text-red-700 cursor-pointer '>
+          className="focus:outline-none text-white bg-red-100 hover:bg-red-300 focus:ring-4 focus:ring-red-100 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-500 dark:hover:bg-red-400 dark:focus:ring-red-900">
           Delete account
-        </span>
-        <span 
+        </button>
+        <button 
+          type='button'
           onClick={handleSignOut}
-          className='text-red-700 cursor-pointer hover:font-bold'>
+          className="focus:outline-none text-white bg-purple-100 hover:bg-purple-300 focus:ring-4 focus:ring-purple-100 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-500 dark:hover:bg-purple-400 dark:focus:ring-purple-900">
           Sign out
-        </span>
+        </button>
       </div>
       {/* <p className='text-red-700 mt-3 text-center text-lg'>{error ? error : ''}</p> */}
       <p className='text-green-700 mt-3 text-center text-lg'>{ updateSuccess ? 'User Profile Updated successfully !' : ''}</p>
