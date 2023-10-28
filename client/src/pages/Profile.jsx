@@ -144,6 +144,23 @@ export default function Profile() {
     }
   };
 
+  const handleListingDelete = async (listingId) => {
+    try {
+      const res = await fetch(`/api/listing/delete/${listingId}`, {
+        method: 'DELETE',
+      });
+       const data = await res.json();
+       if(data.success === false) {
+        console.log(data.message);
+        return;
+       } 
+       setUserListings((prev) => prev.filter((listing) => listing._id != listing._id));
+    } catch (error) {
+      console.log(error.message);
+    }
+
+  };
+
    return (
     <div className='p-3 max-w-lg mx-auto'>
       <h1 className='text-3xl font-semibold text-center my-7'>
@@ -221,7 +238,7 @@ export default function Profile() {
           Sign out
         </span>
       </div>
-      {/* <p className='text-red-700 mt-5 text-center'>{error ? error : ''}</p> */}
+      <p className='text-red-700 mt-5 text-center'>{error ? error : ''}</p>
       <p className='text-green-700 mt-5 text-center'>
       { updateSuccess ? 'User Profile Updated successfully !' : ''}
       </p>
@@ -266,12 +283,12 @@ export default function Profile() {
               <div className='flex flex-col item-center'>
                 <button
                   onClick={() => handleListingDelete(listings._id)}
-                  className='text-red-700 uppercase'
+                  className='text-red-700 '
                 >
                   Delete
                 </button>
                 <Link to={`/update-listing/${listings._id}`}>
-                  <button className='text-green-700 uppercase'>Edit</button>
+                  <button className='text-green-700 '>Edit</button>
                 </Link>
               </div>
             </div>
