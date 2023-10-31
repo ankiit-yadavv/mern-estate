@@ -228,11 +228,11 @@ export default function Search() {
           </button>
         </form>
       </div>
-      <div className='flex-1'>
+      <div className='flex-1 ml-20'>
         <h1 className='text-3xl font-semibold border-b p-3 text-slate-700 mt-5'>
           Listing results:
         </h1>
-        <div className='p-7 flex flex-wrap gap-4'>
+        <div className='p-7 flex flex-wrap gap-10'>
           {!loading && listings.length ===0 && (
             <p className='text-xl text-slate-700'>No Listing found!</p>
           )}
@@ -256,7 +256,7 @@ export default function Search() {
             {showMore && (
             <button
               onClick={onShowMoreClick}
-              className='text-lg md:font-semibold text-green-700 hover:underline p-7 text-center w-full'
+              className='text-lg md:font-semibold text-green-700 hover:underline p-7 w-full mr-56'
             >
               Show more
             </button>
