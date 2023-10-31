@@ -13,6 +13,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
     "firebase": "^10.5.0",
+    "mern-estate": "file:..",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
