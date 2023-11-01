@@ -5,5 +5,5 @@ This template provides a minimal setup to get React working in Vite with HMR and
 
 Currently, two official plugins are available:
 
-<link>@vitejs/plugin-react</link> uses Babel for Fast Refresh
-<link>@vitejs/plugin-react-swc</link> uses SWC for Fast Refresh
+<a href="vitejs/plugin-react" >@vitejs/plugin-react</a> uses Babel for Fast Refresh</br> 
+<a href="vitejs/plugin-react-swc">@vitejs/plugin-react-swc</a> uses SWC for Fast Refresh
